@@ -37,4 +37,11 @@ router.get('/profile/:id_store_profile', function(req, res, next) {
 	});
 });
 
+outer.get('/:id_store', function(req, res, next) {
+  	res.header("Access-Control-Allow-Origin", "*");
+	connection.query('select store_name, imgName from store where id_store=1;', function (error, cursor) {
+		res.json(cursor);
+		console.log(cursor);
+	});
+});
 module.exports = router;
