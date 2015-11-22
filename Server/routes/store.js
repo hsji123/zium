@@ -33,12 +33,13 @@ router.get('/profile', function(req, res, next) {
 		res.json(cursor);
 	});
 });
-/*
+
+//이미지 가게소개 내용
 router.post('/profile/:id_store_profile', function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
-	var address=req.param("address");
-	var phone=req.param("phone");
-	var email=req.param("email");
+	var address=req.body("address");
+	var phone=req.body("phone");
+	var email=req.body("email");
 	console.log(address);
 	console.log(phone);
 	console.log(email);
@@ -51,12 +52,14 @@ router.post('/profile/:id_store_profile', function(req, res, next) {
 		var query='update store_profile set address='+address+', phone='+phone+', email='+email+' where id_store_profile='+req.params.id_store_profile+';'
 	}
 	console.log(query);
-	connection.query(query, function (error, cursor) {
-		console.log(cursor);
-		res.json(cursor);
+	connection.query(query, function (error, info) {
+		console.log(info);
+		res.json({
+			result : true
+		});
 	});
 });
-*/
+
 router.get('/shopping', function(req, res, next) {
   	res.header("Access-Control-Allow-Origin", "*");
   	var query = 'select shopping_name, benefit, imgName, content from shopping;';
@@ -100,6 +103,28 @@ router.get('/:id_store/category', function(req, res, next) {
 		console.log(cursor);
 	});
 });
+
+router.get('/:id_store/category_list', function(req, res, next) {
+  	res.header("Access-Control-Allow-Origin", "*");
+  	var query = 'select distinct(category) from menu where id_store='+req.params.id_store+' order by category;';
+	connection.query(query , function (error, cursor) {
+		console.log(query);
+		res.json(cursor);
+		console.log(cursor);
+	});
+});
+
+router.get('/:id_store/menu_list', function(req, res, next) {
+  	res.header("Access-Control-Allow-Origin", "*");
+	var category=req.param("category");
+  	var query = 'select menu_name from menu where id_store='+req.params.id_store+' and category=\"'+category+'\" order by category;';
+	connection.query(query , function (error, cursor) {
+		console.log(query);
+		res.json(cursor);
+		console.log(cursor);
+	});
+});
+
 /*
 router.post('/:id_store/DOscrap', function(req, res, next) {
   	res.header("Access-Control-Allow-Origin", "*");
@@ -135,7 +160,7 @@ router.post('/:id_store_profile/scrap', function(req, res, next) {
 		if (error == null) {
 			console.log(info);
 			res.json({
-				success : true,
+				result : true
 			});
 		}
 		else{

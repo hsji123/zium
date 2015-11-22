@@ -86,7 +86,7 @@ router.post('/:id_store', function(req, res, next){
                                             }
                                         });
 					res.json({
-						result : true;
+						result : true
 					});
 
 				}
