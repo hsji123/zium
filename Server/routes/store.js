@@ -26,7 +26,7 @@ router.get('/profile', function(req, res, next) {
 	var id=req.param("id");
 	console.log(pass);
 	console.log(id);
-	var query='select * from store_profile where password='+pass+' and store_name=\''+id+'\' order by regdate;'; // id_store_profile add need
+	var query='select * from store_profile where password=md5('+pass+') and store_name=\''+id+'\' order by regdate;'; // id_store_profile add need
 	console.log(query);
 	connection.query(query, function (error, cursor) {
 		console.log(cursor);
