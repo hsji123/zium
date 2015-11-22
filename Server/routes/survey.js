@@ -19,103 +19,129 @@ router.get('/', function(req, res, next) {
 		console.log(cursor);
 	});
 });
-//메일아이디,도메인,경로,카테고리,메뉴,메뉴평점,메뉴평가내용,서비스평점(위생,직원친절도),서비스평가내용,재방문의사
 
-router.post('/:id_store', function(req, res, next){
+router.get('/profile', function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
-	var email_id=req.body.email_id;
-	var domain=req.body.domain;
-	var howto=req.body.howto;
-	var id_store=req.params.id_store;
-	var category=req.body.category;
-	var menu_name=req.body.menu_name;
-	var point=req.body.point;
-	var menu_comment=req.body.menu_comment;
-	var clean_point=req.body.clean_point;
-	var kind_point=req.body.kind_point;
-	var service_comment=req.body.service_comment;
-	var revisit=req.body.revisit;
-
-	var query_user='insert into user(email_id, domain) values (\"' +email_id+ '\", \"' +domain+ '\");';
-	connection.query(query_user, function( error, info){
-		if(error==null){
-			console.log(info);
-			var query_survey='insert into survey(id_store, id_user) values (' +id_store+ ', ' +info.insertId+ ');';
-			console.log(query_survey);
-			connection.query(query_survey, function(error, info){
-				if(error==null){
-					console.log(info);
-					var query_survey_menu='insert into survey_menu(id_survey, menu_name, point, comment) values (' +info.insertId+ ', \"' +menu_name+ '\", ' +point+ ', \"' +menu_comment+ '\");';
-					var query_survey_service='insert into survey_service(id_survey, kind_point, clean_point, comment) values (' +info.insertId+ ', ' +kind_point+ ', ' +clean_point+ ', \"' +service_comment+ '\");';
-					var query_survey_howto='insert into survey_howto(id_survey, howto, returnvisit) values (' +info.insertId+ ', ' +howto+ ', ' +revisit+ ');';
-					console.log(query_survey_menu);
-					console.log(query_survey_service);
-					console.log(query_survey_howto);
-					connection.query(query_survey_menu, function(error, info){
-						if(error==null){
-							console.log(info);
-						}
-						else{
-							console.log(error);
-							res.status(503).json({
-								result : false, reason : "fail insult survey_menu"
-							});
-						}
-					});
-					connection.query(query_survey_service, function(error, info){
-                                                if(error==null){
-                                                        console.log(info);
-                                                }
-                                                else{
-                                                        console.log(error);
-                                                        res.status(503).json({
-                                                                result : false, reason : "fail insult survey_service"
-                                                        });
-                                                }
-                                        });
-
-					connection.query(query_survey_howto, function(error, info){
-                                                if(error==null){
-                                                        console.log(info);
-                                                }
-                                                else{
-                                                        console.log(error);
-                                                        res.status(503).json({
-                                                                result : false, reason : "fail insult survey_howto"
-                                                        });
-                                                }
-                                        });
-
-				}
-				else{
-					console.log(error);
-					res.status(503).json({
-						result :false, reason : "fail insult survey"
-					});
-				}
-			});
-		}
-		else{
-			console.log(error);
-			res.status(503).json({
-				result : false, reason : "fail insult user"
-			});
-		}		
-	});
-	//var query_menu='insert into menu(id_store, category, menu_name) values (?, ?, ?);, [id_store, category, menu_name]';
-	//var query_survey='inset into survey(id_store, id_user) values (?, ?);, [id_store, ?????]';
-});
-
-router.get('/profile/:id_store_profile', function(req, res, next) {
 	var pass=req.param("password");
 	var id=req.param("id");
 	console.log(pass);
 	console.log(id);
-	var query='select * from store_profile where password='+pass+' and store_name=\''+id+'\' order by regdate;';
+	var query='select * from store_profile where password='+pass+' and store_name=\''+id+'\' order by regdate;'; // id_store_profile add need
 	console.log(query);
 	connection.query(query, function (error, cursor) {
 		console.log(cursor);
 		res.json(cursor);
+	});
+});
+/*
+router.post('/profile/:id_store_profile', function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	var address=req.param("address");
+	var phone=req.param("phone");
+	var email=req.param("email");
+	console.log(address);
+	console.log(phone);
+	console.log(email);
+	if(req.param("password")!=null){
+		var pass=req.param("password");
+		console.log(pass);
+		var query='update store_profile set address='+address+', phone='+phone+', email='+email+', password='+pass+' where id_store_profile='+req.params.id_store_profile+';'
+	}
+	else{
+		var query='update store_profile set address='+address+', phone='+phone+', email='+email+' where id_store_profile='+req.params.id_store_profile+';'
+	}
+	console.log(query);
+	connection.query(query, function (error, cursor) {
+		console.log(cursor);
+		res.json(cursor);
+	});
+});
+*/
+router.get('/shopping', function(req, res, next) {
+  	res.header("Access-Control-Allow-Origin", "*");
+  	var query = 'select shopping_name, benefit, imgName, content from shopping;';
+	connection.query(query, function (error, cursor) {
+//	connection.query('select * from shopping;', function (error, cursor) {
+		console.log(query);
+		res.json(cursor);
+		console.log(cursor);
+	});
+});
+
+router.get('/:id_store', function(req, res, next) {
+  	res.header("Access-Control-Allow-Origin", "*");
+  	var query = 'select store_name, imgName from store where id_store='+req.params.id_store+';';
+	connection.query(query , function (error, cursor) {
+		console.log(query);
+		res.json(cursor);
+		console.log(cursor);
+	});
+});
+
+router.get('/:id_store/menu', function(req, res, next) {
+  	res.header("Access-Control-Allow-Origin", "*");
+  	var query = 'select sub.id_user, sub.menu_name, sub.point, sub.comment, user.email_id, sub.regdate from \
+		(select survey.id_user, survey.id_store, survey.id_survey, survey_menu.menu_name, survey_menu.point, survey_menu.comment, survey_menu.regdate \
+			from survey inner join survey_menu where survey.id_store='+req.params.id_store+' and survey.id_survey=survey_menu.id_survey) as sub \
+			inner join user where sub.id_user=user.id_user;';
+	connection.query(query , function (error, cursor) {
+		console.log(query);
+		res.json(cursor);
+		console.log(cursor);
+	});
+});
+
+router.get('/:id_store/category', function(req, res, next) {
+  	res.header("Access-Control-Allow-Origin", "*");
+  	var query = 'select category, menu_name  from menu where id_store='+req.params.id_store+' order by category;';
+	connection.query(query , function (error, cursor) {
+		console.log(query);
+		res.json(cursor);
+		console.log(cursor);
+	});
+});
+/*
+router.post('/:id_store/DOscrap', function(req, res, next) {
+  	res.header("Access-Control-Allow-Origin", "*");
+  	var query = 'update scrap set scrap_name='+req.body.scrap_name_after+' where id_store_profile='+req.params.id_store_profile+' and scrap_name='+req.body.scrap_name_before+';';
+	connection.query(query , function (error, info) {
+		if (error == null) {
+			console.log(info);
+			res.json({
+				success : true,
+			});
+		}
+		else{
+			console.log(error);
+			res.status(503).json(error);
+		}
+	});
+});
+*/
+router.get('/:id_store_profile/scrap', function(req, res, next) {
+  	res.header("Access-Control-Allow-Origin", "*");
+  	var query = 'select scrap_name from scrap where id_store_profile='+req.params.id_store_profile+' order by regdate desc;';
+	connection.query(query , function (error, cursor) {
+		console.log(query);
+		res.json(cursor);
+		console.log(cursor);
+	});
+});
+
+router.post('/:id_store_profile/scrap', function(req, res, next) {
+  	res.header("Access-Control-Allow-Origin", "*");
+  	var query = 'update scrap set scrap_name='+req.body.scrap_name_after+' where id_store_profile='+req.params.id_store_profile+' and scrap_name='+req.body.scrap_name_before+';';
+	connection.query(query , function (error, info) {
+		if (error == null) {
+			console.log(info);
+			res.json({
+				success : true,
+			});
+		}
+		else{
+			console.log(error);
+			res.status(503).json(error);
+		}
 	});
 });
 
