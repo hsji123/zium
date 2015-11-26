@@ -148,3 +148,4 @@ router.get('/:id_store/returnvisit', function(req, res, next) {
 });
 
 module.exports = router;
+

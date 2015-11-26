@@ -10,7 +10,7 @@ var connection = mysql.createConnection({
 	'database' : 'zium',
 });
 
-
+/*
 router.get('/', function(req, res, next) {
   	res.header("Access-Control-Allow-Origin", "*");
 	connection.query('select * from store_profile order by regdate;', function (error, cursor) {
@@ -19,7 +19,7 @@ router.get('/', function(req, res, next) {
 		console.log(cursor);
 	});
 });
-
+*/
 router.get('/profile', function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
 	var pass=req.param("password");
@@ -40,16 +40,19 @@ router.post('/profile/:id_store_profile', function(req, res, next) {
 	var address=req.body("address");
 	var phone=req.body("phone");
 	var email=req.body("email");
+	var store_img=req.body("store_img");
+	var store_content=req.body("store_content");
+
 	console.log(address);
 	console.log(phone);
 	console.log(email);
 	if(req.param("password")!=null){
 		var pass=req.param("password");
 		console.log(pass);
-		var query='update store_profile set address='+address+', phone='+phone+', email='+email+', password='+pass+' where id_store_profile='+req.params.id_store_profile+';'
+		var query='update store_profile set address=\"'+address+'\", phone=\"'+phone+'\", email=\"'+email+'\", password=\"'+pass+'\", store_img=\"'+store_img+'\", store_content=\"'+store_content+'\" where id_store_profile='+req.params.id_store_profile+';'
 	}
 	else{
-		var query='update store_profile set address='+address+', phone='+phone+', email='+email+' where id_store_profile='+req.params.id_store_profile+';'
+		var query='update store_profile set address=\"'+address+'\", phone=\"'+phone+'\", email=\"'+email+'\" , store_img=\"'+store_img+'\", store_content=\"'+store_content+ '\" where id_store_profile='+req.params.id_store_profile+';'
 	}
 	console.log(query);
 	connection.query(query, function (error, info) {
@@ -117,7 +120,7 @@ router.get('/:id_store/category_list', function(req, res, next) {
 router.get('/:id_store/menu_list', function(req, res, next) {
   	res.header("Access-Control-Allow-Origin", "*");
 	var category=req.param("category");
-  	var query = 'select menu_name from menu where id_store='+req.params.id_store+' and category=\"'+category+'\" order by category;';
+  	var query = 'select menu_name, price from menu where id_store='+req.params.id_store+' and category=\"'+category+'\";';
 	connection.query(query , function (error, cursor) {
 		console.log(query);
 		res.json(cursor);
