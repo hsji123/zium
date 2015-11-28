@@ -128,10 +128,29 @@ router.get('/:id_store/menu_list', function(req, res, next) {
 	});
 });
 
-/*
+
 router.post('/:id_store/DOscrap', function(req, res, next) {
   	res.header("Access-Control-Allow-Origin", "*");
-  	var query = 'update scrap set scrap_name='+req.body.scrap_name_after+' where id_store_profile='+req.params.id_store_profile+' and scrap_name='+req.body.scrap_name_before+';';
+  	var scrap_name=req.body.scrap_name;
+  	var score=req.body.score;
+  	var content=req.body.content;
+  	var id_email=req.body.id_email;
+  	var regdate=req.body.regdate;
+
+  	var query_DOscrap='insert into scrap_content(scrap_name, score, content, id_email, regdate) values \
+  						(\"' +scrap_name+ '\", \"' +score+ '\",\"' +content+ '\",\"' +id_email+ '\",\"' +regdate+ '\");';
+	connection.query(query_user, function( error, info){
+		if(error==null){
+			console.log(info);
+		}
+		else{
+			console.log(error);
+			res.status(503).json(error);
+		}
+	});
+});
+
+	var query = 'update scrap set scrap_name='+req.body.scrap_name_after+' where id_store_profile='+req.params.id_store_profile+' and scrap_name='+req.body.scrap_name_before+';';
 	connection.query(query , function (error, info) {
 		if (error == null) {
 			console.log(info);
@@ -145,7 +164,8 @@ router.post('/:id_store/DOscrap', function(req, res, next) {
 		}
 	});
 });
-*/
+
+
 router.get('/:id_store_profile/scrap', function(req, res, next) {
   	res.header("Access-Control-Allow-Origin", "*");
   	var query = 'select scrap_name from scrap where id_store_profile='+req.params.id_store_profile+' order by regdate desc;';

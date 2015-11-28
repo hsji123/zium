@@ -125,8 +125,8 @@ router.get('/profile/:id_store_profile', function(req, res, next) {
 
 router.get('/:id_store/howto', function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
-	var query='SELECT SUM(IF(survey_howto.howto = 0, 1, 0)) as \'howto_1\', SUM(IF(survey_howto.howto = 1, 1, 0)) as \'howto_2\', SUM(IF(survey_howto.howto = 2, 1, 0)) as \'howto_3\', \
-    			SUM(IF(survey_howto.howto = 3, 1, 0)) as \'howto_4\', SUM(IF(survey_howto.howto = 4, 1, 0)) as \'howto_5\' FROM survey INNER JOIN survey_howto \
+	var query='SELECT SUM(IF(survey_howto.howto = 1, 1, 0)) as \'howto_1\', SUM(IF(survey_howto.howto = 2, 1, 0)) as \'howto_2\', SUM(IF(survey_howto.howto = 3, 1, 0)) as \'howto_3\', \
+    			SUM(IF(survey_howto.howto = 4, 1, 0)) as \'howto_4\', SUM(IF(survey_howto.howto = 5, 1, 0)) as \'howto_5\' FROM survey INNER JOIN survey_howto \
     			WHERE survey.id_store = '+req.params.id_store+' AND survey.id_survey = survey_howto.id_survey;';
 	console.log(query);
 	connection.query(query, function (error, cursor) {
@@ -137,8 +137,8 @@ router.get('/:id_store/howto', function(req, res, next) {
 
 router.get('/:id_store/returnvisit', function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
-	var query='SELECT SUM(IF(survey_howto.returnvisit = 0, 1, 0)) as \'rv_1\', SUM(IF(survey_howto.returnvisit = 1, 1, 0)) as \'rv_2\', SUM(IF(survey_howto.returnvisit = 2, 1, 0)) as \'rv_3\', \
-    			SUM(IF(survey_howto.returnvisit = 3, 1, 0)) as \'rv_4\', SUM(IF(survey_howto.returnvisit = 4, 1, 0)) \'rv_5\' FROM survey INNER JOIN survey_howto \
+	var query='SELECT SUM(IF(survey_howto.returnvisit = 1, 1, 0)) as \'rv_1\', SUM(IF(survey_howto.returnvisit = 2, 1, 0)) as \'rv_2\', SUM(IF(survey_howto.returnvisit = 3, 1, 0)) as \'rv_3\', \
+    			SUM(IF(survey_howto.returnvisit = 4, 1, 0)) as \'rv_4\', SUM(IF(survey_howto.returnvisit = 5, 1, 0)) \'rv_5\' FROM survey INNER JOIN survey_howto \
     			WHERE survey.id_store = '+req.params.id_store+' AND survey.id_survey = survey_howto.id_survey;';
 	console.log(query);
 	connection.query(query, function (error, cursor) {
