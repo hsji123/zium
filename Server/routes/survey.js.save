@@ -126,7 +126,7 @@ router.get('/profile/:id_store_profile', function(req, res, next) {
 router.get('/:id_store/howto', function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
 	var query='SELECT SUM(IF(survey_howto.howto = 1, 1, 0)) as \'howto_1\', SUM(IF(survey_howto.howto = 2, 1, 0)) as \'howto_2\', SUM(IF(survey_howto.howto = 3, 1, 0)) as \'howto_3\', \
-    			SUM(IF(survey_howto.howto = 4, 1, 0)) as \'howto_4\', SUM(IF(survey_howto.howto = 5, 1, 0)) as \'howto_5\' FROM survey INNER JOIN survey_howto \
+    			SUM(IF(survey_howto.howto = 3, 1, 0)) as \'howto_4\', SUM(IF(survey_howto.howto = 4, 1, 0)) as \'howto_5\' FROM survey INNER JOIN survey_howto \
     			WHERE survey.id_store = '+req.params.id_store+' AND survey.id_survey = survey_howto.id_survey;';
 	console.log(query);
 	connection.query(query, function (error, cursor) {
