@@ -23,6 +23,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/:id_store', function(req, res, next){
 	res.header("Access-Control-Allow-Origin", "*");
+<<<<<<< HEAD
 	var id_store=req.params.id_store;
 	
 	var sex = req.body.sex;
@@ -43,6 +44,22 @@ router.post('/:id_store', function(req, res, next){
 	var sponsor_question = req.body.sponsor_question;
 
 	var query_user='insert into user_2(sex, age, frequency, phone_num) values (\"' +sex+ '\", \"' +age+ '\", \"' +frequency+ '\", \"' +phone_num+ '\");';
+=======
+	var email_id=req.body.email_id;
+	var domain=req.body.domain;
+	var howto=req.body.howto;
+	var id_store=req.params.id_store;
+	var category=req.body.category;
+	var menu_name=req.body.menu_name;
+	var point=req.body.point;
+	var menu_comment=req.body.menu_comment;
+	var clean_point=req.body.clean_point;
+	var kind_point=req.body.kind_point;
+	var service_comment=req.body.service_comment;
+	var revisit=req.body.revisit;
+
+	var query_user='insert into user(email_id, domain) values (\"' +email_id+ '\", \"' +domain+ '\");';
+>>>>>>> d4c0d9989e100511cc19ed9827601c74182b1410
 	connection.query(query_user, function( error, info){
 		if(error==null){
 			console.log(info);
@@ -51,12 +68,31 @@ router.post('/:id_store', function(req, res, next){
 			connection.query(query_survey, function(error, info){
 				if(error==null){
 					console.log(info);
+<<<<<<< HEAD
 					var query_survey_service='insert into survey_service_2(id_survey, category, menu_name, taste, service, comment, sponsor_question) values \
 							(' +info.insertId+ ', \"' +category+ '\", \"' +menu_name+ '\", ' +taste+ ', ' +service+ ', \"' +comment+ '\", ' +sponsor_question+ ');';
+=======
+					var query_survey_menu='insert into survey_menu(id_survey, menu_name, point, comment) values (' +info.insertId+ ', \"' +menu_name+ '\", ' +point+ ', \"' +menu_comment+ '\");';
+					var query_survey_service='insert into survey_service(id_survey, kind_point, clean_point, comment) values (' +info.insertId+ ', ' +kind_point+ ', ' +clean_point+ ', \"' +service_comment+ '\");';
+>>>>>>> d4c0d9989e100511cc19ed9827601c74182b1410
 					var query_survey_howto='insert into survey_howto(id_survey, howto, returnvisit) values (' +info.insertId+ ', ' +howto+ ', ' +revisit+ ');';
 					console.log(query_survey_menu);
 					console.log(query_survey_service);
 					console.log(query_survey_howto);
+<<<<<<< HEAD
+=======
+					connection.query(query_survey_menu, function(error, info){
+											if(error==null){
+												console.log(info);
+											}
+											else{
+												console.log(error);
+												res.status(503).json({
+													result : false, reason : "fail insert survey_menu"
+												});
+											}
+										});
+>>>>>>> d4c0d9989e100511cc19ed9827601c74182b1410
 					connection.query(query_survey_service, function(error, info){
                                             if(error==null){
                                                     console.log(info);
@@ -64,7 +100,11 @@ router.post('/:id_store', function(req, res, next){
                                             else{
                                                     console.log(error);
                                                     res.status(503).json({
+<<<<<<< HEAD
                                                             result : false, reason : "fail insert survey_service_2"
+=======
+                                                            result : false, reason : "fail insert survey_service"
+>>>>>>> d4c0d9989e100511cc19ed9827601c74182b1410
                                                     });
                                             }
                                         });
