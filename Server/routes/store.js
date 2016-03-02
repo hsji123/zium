@@ -20,6 +20,8 @@ router.get('/', function(req, res, next) {
 	});
 });
 */
+/*
+//가게 로그인
 router.get('/profile', function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
 	var pass=req.param("password");
@@ -33,7 +35,8 @@ router.get('/profile', function(req, res, next) {
 		res.json(cursor);
 	});
 });
-
+*/
+/*
 //이미지 가게소개 내용
 router.post('/profile/:id_store_profile', function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
@@ -62,7 +65,9 @@ router.post('/profile/:id_store_profile', function(req, res, next) {
 		});
 	});
 });
-
+*/
+/*
+//가게 메인 소개
 router.get('/shopping', function(req, res, next) {
   	res.header("Access-Control-Allow-Origin", "*");
   	var query = 'select shopping_name, benefit, imgName, content from shopping;';
@@ -73,6 +78,7 @@ router.get('/shopping', function(req, res, next) {
 		console.log(cursor);
 	});
 });
+*/
 
 router.get('/:id_store', function(req, res, next) {
   	res.header("Access-Control-Allow-Origin", "*");
@@ -128,7 +134,7 @@ router.get('/:id_store/menu_list', function(req, res, next) {
 	});
 });
 
-
+/*
 router.post('/:id_store/DOscrap', function(req, res, next) {
   	res.header("Access-Control-Allow-Origin", "*");
   	var scrap_name=req.body.scrap_name;
@@ -164,8 +170,9 @@ router.post('/:id_store/DOscrap', function(req, res, next) {
 		}
 	});
 });
+*/
 
-
+/*
 router.get('/:id_store_profile/scrap', function(req, res, next) {
   	res.header("Access-Control-Allow-Origin", "*");
   	var query = 'select scrap_name from scrap where id_store_profile='+req.params.id_store_profile+' order by regdate desc;';
@@ -175,7 +182,8 @@ router.get('/:id_store_profile/scrap', function(req, res, next) {
 		console.log(cursor);
 	});
 });
-
+*/
+/*
 router.post('/:id_store_profile/scrap', function(req, res, next) {
   	res.header("Access-Control-Allow-Origin", "*");
   	var query = 'update scrap set scrap_name='+req.body.scrap_name_after+' where id_store_profile='+req.params.id_store_profile+' and scrap_name='+req.body.scrap_name_before+';';
@@ -192,5 +200,5 @@ router.post('/:id_store_profile/scrap', function(req, res, next) {
 		}
 	});
 });
-
+*/
 module.exports = router;

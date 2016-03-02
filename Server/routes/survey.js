@@ -10,7 +10,7 @@ var connection = mysql.createConnection({
 	'database' : 'zium',
 });
 
-
+/*
 router.get('/', function(req, res, next) {
   	res.header("Access-Control-Allow-Origin", "*");
 	connection.query('select * from store_profile order by regdate;', function (error, cursor) {
@@ -19,6 +19,8 @@ router.get('/', function(req, res, next) {
 		console.log(cursor);
 	});
 });
+*/
+
 //메일아이디,도메인,경로,카테고리,메뉴,메뉴평점,메뉴평가내용,서비스평점(위생,직원친절도),서비스평가내용,재방문의사
 
 router.post('/:id_store', function(req, res, next){
@@ -44,7 +46,7 @@ router.post('/:id_store', function(req, res, next){
 
 	var query_user='insert into user_2(sex, age, frequency, phone_num) values (\"' +sex+ '\", \"' +age+ '\", \"' +frequency+ '\", \"' +phone_num+ '\");';
 
-	connection.query(query_user, function( error, info){
+	connection.query(query_user, function ( error, info){
 		if(error==null){
 			console.log(info);
 			var query_survey='insert into survey(id_store, id_user) values (' +id_store+ ', ' +info.insertId+ ');';
